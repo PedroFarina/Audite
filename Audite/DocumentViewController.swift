@@ -33,10 +33,10 @@ class DocumentViewController: UIViewController {
                     self.player = try AKAudioPlayer(file: file)
                     // Define your gain below. >1 means amplifying it to be louder
                     self.booster = AKBooster(self.player, gain: 1)
-                    AudioKit.output = self.booster
+                    AKManager.output = self.booster
 
                     // And then to play your file:
-                    try AudioKit.start()
+                    try AKManager.start()
                     self.player.play()
                 } catch {
                     fatalError(error.localizedDescription)
@@ -51,7 +51,7 @@ class DocumentViewController: UIViewController {
     
     @IBAction func dismissDocumentViewController() {
         player.stop()
-        try? AudioKit.stop()
+        try? AKManager.stop()
         dismiss(animated: true) {
             self.document?.close(completionHandler: nil)
         }
